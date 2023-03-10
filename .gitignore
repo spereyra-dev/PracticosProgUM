@@ -1,0 +1,11 @@
+# Project exclude paths
+/out/
+*.idea
+*.iml
+*.swp
+target/
+.DS_Store
+.settings/
+.classpath
+.factorypath
+.project
