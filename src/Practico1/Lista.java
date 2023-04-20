@@ -1,4 +1,4 @@
-package Practico1.uy.edu.um.prog2.tad.linkedlist;
+package Practico1;
 
 public interface Lista {
     void add(Object value);
@@ -9,7 +9,5 @@ public interface Lista {
 
     boolean contains(Object value);
 
-    void addFirst(Object value);
-
-    void addLast(Object value);
+    Integer size();
 }

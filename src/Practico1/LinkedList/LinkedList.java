@@ -1,4 +1,6 @@
-package Practico1.uy.edu.um.prog2.tad.linkedlist;
+package Practico1.LinkedList;
+
+import Practico1.Lista;
 
 public class LinkedList implements Lista {
     private Nodo head;
@@ -68,6 +70,10 @@ public class LinkedList implements Lista {
     }
 
     @Override
+    public Integer size() {
+        return this.size;
+    }
+
     public void addFirst(Object value) {
         Nodo newNode = new Nodo(value);
         newNode.next = this.head;
@@ -75,7 +81,6 @@ public class LinkedList implements Lista {
         this.size++;
     }
 
-    @Override
     public void addLast(Object value) {
         Nodo newNode = new Nodo(value);
         if (this.head == null) {
