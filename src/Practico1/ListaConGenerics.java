@@ -1,6 +1,6 @@
 package Practico1;
 
-public interface ListaConGenerics <T>{
+public interface ListaConGenerics<T> {
     void add(T value);
 
     void remove(int position);

@@ -1,6 +1,5 @@
 package Practico2.Stack;
 
-import Practico2.Stack.StackArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
