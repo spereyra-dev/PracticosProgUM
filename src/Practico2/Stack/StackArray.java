@@ -6,7 +6,7 @@ import java.util.EmptyStackException;
 
 public class StackArray<T> implements MyStack<T> {
 
-    private T[] stackArray;
+    private final T[] stackArray;
     private int topIndex;
 
     public StackArray(int size) {
