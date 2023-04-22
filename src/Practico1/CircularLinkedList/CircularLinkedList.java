@@ -1,11 +1,13 @@
 package Practico1.CircularLinkedList;
 
-import Practico1.Lista;
+import Practico1.ListaConGenerics;
 
-public class CircularLinkedList implements Lista {
+import java.util.NoSuchElementException;
 
-    private Nodo first;
-    private Nodo last;
+public class CircularLinkedList<T extends Comparable<T>> implements ListaConGenerics<T> {
+
+    private Nodo<T> first;
+    private Nodo<T> last;
     private int size;
 
     public CircularLinkedList() {
@@ -14,11 +16,11 @@ public class CircularLinkedList implements Lista {
         this.size = 0;
     }
 
-    public Nodo getFirst() {
+    public Nodo<T> getFirst() {
         return first;
     }
 
-    public Nodo getLast() {
+    public Nodo<T> getLast() {
         return last;
     }
 
@@ -32,22 +34,22 @@ public class CircularLinkedList implements Lista {
     }
 
     @Override
-    public void add(Object value) {
-        Nodo newNodo = new Nodo(value);
+    public void add(T value) {
+        Nodo<T> newNodo = new Nodo<>(value);
         if (isEmpty()) {
             this.first = newNodo;
             this.last = newNodo;
             newNodo.setNext(newNodo);
             newNodo.setPrev(newNodo);
-        } else if (((Comparable<Object>) newNodo.getValue()).compareTo(this.first.getValue()) < 0) {
+        } else if (newNodo.getValue().compareTo(this.first.getValue()) < 0) {
             newNodo.setNext(this.first);
             newNodo.setPrev(this.last);
             this.first.setPrev(newNodo);
             this.last.setNext(newNodo);
             this.first = newNodo;
         } else {
-            Nodo current = this.first;
-            while (current.getNext() != this.first && ((Comparable<Object>) newNodo.getValue()).compareTo(current.getNext().getValue()) >= 0) {
+            Nodo<T> current = this.first;
+            while (current.getNext() != this.first && newNodo.getValue().compareTo(current.getNext().getValue()) >= 0) {
                 current = current.getNext();
             }
             newNodo.setNext(current.getNext());
@@ -71,7 +73,7 @@ public class CircularLinkedList implements Lista {
             this.first.setPrev(this.last);
             this.last.setNext(this.first);
         } else {
-            Nodo current = this.first;
+            Nodo<T> current = this.first;
             for (int i = 0; i < position - 1; i++) {
                 current = current.getNext();
             }
@@ -85,11 +87,42 @@ public class CircularLinkedList implements Lista {
     }
 
     @Override
-    public Object get(int position) {
+    public void remove(T value) {
+        if (isEmpty()) {
+            throw new NoSuchElementException("La lista está vacía");
+        }
+        Nodo<T> current = this.first;
+        while (current != null) {
+            if (current.getValue().equals(value)) {
+                if (current == this.first) {
+                    this.first = this.first.getNext();
+                    this.first.setPrev(this.last);
+                    this.last.setNext(this.first);
+                } else if (current == this.last) {
+                    this.last = this.last.getPrev();
+                    this.last.setNext(this.first);
+                    this.first.setPrev(this.last);
+                } else {
+                    current.getPrev().setNext(current.getNext());
+                    current.getNext().setPrev(current.getPrev());
+                }
+                this.size--;
+                return;
+            }
+            current = current.getNext();
+            if (current == this.first) {
+                break;
+            }
+        }
+        throw new NoSuchElementException("El valor no se encuentra en la lista");
+    }
+
+    @Override
+    public T get(int position) {
         if (position < 0 || position >= this.size) {
             throw new IndexOutOfBoundsException("Posición inválida");
         }
-        Nodo current = this.first;
+        Nodo<T> current = this.first;
         for (int i = 0; i < position; i++) {
             current = current.getNext();
         }
@@ -97,8 +130,8 @@ public class CircularLinkedList implements Lista {
     }
 
     @Override
-    public boolean contains(Object value) {
-        Nodo current = this.first;
+    public boolean contains(T value) {
+        Nodo<T> current = this.first;
         while (current != null) {
             if (current.getValue().equals(value)) {
                 return true;
@@ -109,6 +142,23 @@ public class CircularLinkedList implements Lista {
             }
         }
         return false;
+    }
+
+    public void addLast(T value) {
+        Nodo<T> newNodo = new Nodo<>(value);
+        if (isEmpty()) {
+            this.first = newNodo;
+            this.last = newNodo;
+            newNodo.setNext(newNodo);
+            newNodo.setPrev(newNodo);
+        } else {
+            newNodo.setPrev(this.last);
+            newNodo.setNext(this.first);
+            this.last.setNext(newNodo);
+            this.first.setPrev(newNodo);
+            this.last = newNodo;
+        }
+        this.size++;
     }
 
 }

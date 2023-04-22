@@ -1,6 +1,6 @@
-package Practico1.CircularLinkedList;
+package Practico2.Stack;
 
-class Nodo<T> {
+public class Nodo<T> {
     private T value;
     private Nodo<T> next;
     private Nodo<T> prev;

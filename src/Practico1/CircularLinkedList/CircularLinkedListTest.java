@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CircularLinkedListTest {
 
-    CircularLinkedList circularLinkedList = new CircularLinkedList();
+    CircularLinkedList<Integer> circularLinkedList = new CircularLinkedList();
 
     @Test
     public void testAdd() { //Prueba de agregar elementos a la lista
